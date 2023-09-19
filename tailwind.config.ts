@@ -14,6 +14,9 @@ const config: Config = {
         tapGrey: "#eeeeee",
       },
     },
+    minHeight: {
+      "1/2": "50%",
+    },
   },
   plugins: [],
 };
