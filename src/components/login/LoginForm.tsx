@@ -28,6 +28,8 @@ export default function LoginForm() {
       password: pwdRef.current?.value,
     })
       .then((res) => {
+        console.log(res);
+        localStorage.setItem("access_token", res.data.accessToken);
         router.push("/user");
       })
       .catch((err: AxiosError) => {
@@ -40,7 +42,7 @@ export default function LoginForm() {
   };
 
   return (
-    <section className="bg-tapBlue p-24 rounded-3xl flex flex-col items-center mb-24">
+    <section className="bg-tapBlue p-16 rounded-3xl flex flex-col items-center">
       <div className="mb-16 text-4xl text-white">두드려 CS 관리자 페이지</div>
       <form className="text-right">
         <p className="inline-block text-3xl w-40 text-right pr-5  text-white">
