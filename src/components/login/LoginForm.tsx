@@ -14,7 +14,7 @@ export default function LoginForm() {
   const formChangeHandler = () => {
     if (idRef.current?.value && pwdRef.current?.value) {
       setButtonDisabled(false);
-    }
+    } else setButtonDisabled(true);
   };
 
   const loginBtnClickHandler = (e: MouseEvent<HTMLInputElement>) => {
@@ -28,7 +28,6 @@ export default function LoginForm() {
       password: pwdRef.current?.value,
     })
       .then((res) => {
-        console.log(res);
         localStorage.setItem("access_token", res.data.accessToken);
         router.push("/user");
       })
