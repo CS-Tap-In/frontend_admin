@@ -4,6 +4,7 @@ import { RESPONSE_STATUS } from "@/service";
 import { LOGIN_API } from "@/service/login";
 import { useRouter } from "next/navigation";
 import React, { MouseEvent, useRef, useState } from "react";
+import { setCookie } from "cookies-next";
 
 export default function LoginForm() {
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -28,7 +29,7 @@ export default function LoginForm() {
       password: pwdRef.current?.value,
     })
       .then((res) => {
-        localStorage.setItem("access_token", res.data.accessToken);
+        setCookie("access_token", res.data.accessToken);
         router.push("/user");
       })
       .catch((err: AxiosError) => {
