@@ -9,7 +9,7 @@ export default function QuizLayout({
   return (
     <div className="flex w-screen bg-tapGrey">
       <SideNavigation />
-      {children}
+      <section className="h-screen pt-10 w-5/6">{children}</section>
     </div>
   );
 }
