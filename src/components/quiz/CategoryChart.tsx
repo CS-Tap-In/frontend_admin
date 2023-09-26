@@ -2,7 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AxiosError } from "axios";
 import Button from "../Button";
-import { CATEGORY_API } from "@/service/category";
+import { getCookie } from "cookies-next";
+import { QUIZ_API } from "@/service/quiz";
+import { RESPONSE_STATUS } from "@/service";
 
 export default function CategoryChart() {
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -10,7 +12,7 @@ export default function CategoryChart() {
   const ctgRef = useRef<HTMLInputElement | null>(null);
 
   const getCategory = () => {
-    CATEGORY_API.getCategories()
+    QUIZ_API.getCategories(getCookie("access_token"))
       .then((res) => {
         setCategories(res.data);
       })
@@ -22,7 +24,7 @@ export default function CategoryChart() {
   const createCategory = () => {
     if (!ctgRef.current?.value) return;
     setButtonDisabled(true);
-    CATEGORY_API.createCategory({ title: ctgRef.current?.value })
+    QUIZ_API.createCategory(getCookie("access_token"), ctgRef.current?.value)
       .then((res) => {
         //TODO toast message
         getCategory();
@@ -37,6 +39,20 @@ export default function CategoryChart() {
   const inputChangeHandler = () => {
     if (!ctgRef.current?.value) setButtonDisabled(true);
     else setButtonDisabled(false);
+  };
+
+  const deleteCategory = (idx: number) => {
+    QUIZ_API.deleteCategory(getCookie("access_token"), idx)
+      .then((res) => {
+        getCategory();
+      })
+      .catch((err) => {
+        if (err.response?.status === RESPONSE_STATUS.BAD_REQUEST) {
+          alert("잘못된 요청입니다.");
+          return;
+        }
+        //TODO 에러처리
+      });
   };
 
   useEffect(() => {
@@ -75,7 +91,7 @@ export default function CategoryChart() {
               />
               <Button
                 value="삭제"
-                onClick={() => {}}
+                onClick={() => deleteCategory(ctg.id)}
                 className="flex-none w-16 h-9 text-sm bg-red-400"
               />
             </div>
@@ -84,7 +100,4 @@ export default function CategoryChart() {
       </div>
     </div>
   );
-}
-function err(reason: any): PromiseLike<never> {
-  throw new Error("Function not implemented.");
 }
