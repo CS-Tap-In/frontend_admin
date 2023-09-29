@@ -6,13 +6,11 @@ interface Category {
 type StatusType = "PUBLIC" | "PRIVATE" | "UNAPPROVED" | "REJECTED";
 
 interface Quiz {
-  id: number;
   problem: string;
   title: string;
+  answer: string[];
   categoryId: number;
-  categoryTitle: string;
   status: StatusType;
-  createdAt: "string";
 }
 
 interface QuizDetail {

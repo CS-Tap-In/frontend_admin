@@ -12,15 +12,11 @@ export default async function QuizManagePage() {
   }
 
   const categories = await QUIZ_API.getCategories(token);
-  const quizzes = await QUIZ_API.getQuizzes(token);
 
   return (
     <div className="h-full flex flex-col">
       <div className="ml-5 text-3xl pb-5">퀴즈 관리</div>
-      <QuizManagement
-        categories={categories.data}
-        quizzes={quizzes.data.content}
-      />
+      <QuizManagement categories={categories.data} />
     </div>
   );
 }

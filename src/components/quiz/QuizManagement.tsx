@@ -7,17 +7,15 @@ import { getCookie } from "cookies-next";
 
 type Props = {
   categories: Category[];
-  quizzes: Quiz[];
 };
 
-export default function QuizManagement({ categories, quizzes }: Props) {
+export default function QuizManagement({ categories }: Props) {
   const [quizList, setQuizList] = useState<Quiz[]>([]);
   const [params, setParams] = useState<QuizParams>({});
 
   const getQuizzes = useCallback(() => {
     QUIZ_API.getQuizzes(getCookie("access_token"), params)
       .then((res) => {
-        console.log(res.data.content);
         setQuizList(res.data.content);
       })
       .catch(() => {});
@@ -42,13 +40,13 @@ export default function QuizManagement({ categories, quizzes }: Props) {
   }, [params, getQuizzes]);
 
   return (
-    <div>
+    <>
       <QuizFilter
         categories={categories}
         authors={[]}
         onChange={filterQuizzes}
       />
       <QuizChart quizzes={quizList} />
-    </div>
+    </>
   );
 }
