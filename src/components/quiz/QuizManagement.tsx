@@ -4,6 +4,7 @@ import QuizChart from "./QuizChart";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { QUIZ_API } from "@/service/quiz";
 import { getCookie } from "cookies-next";
+import Button from "../Button";
 
 type Props = {
   categories: Category[];
@@ -39,14 +40,31 @@ export default function QuizManagement({ categories }: Props) {
     getQuizzes();
   }, [params, getQuizzes]);
 
+  const selectedQuizzes: number[] = [];
+
   return (
     <>
-      <QuizFilter
-        categories={categories}
-        authors={[]}
-        onChange={filterQuizzes}
+      <section className="flex justify-between my-5 mr-5">
+        <QuizFilter
+          categories={categories}
+          authors={[]}
+          onChange={filterQuizzes}
+        />
+        <div>
+          <Button value="숨기기" onClick={() => {}} className="ml-5 w-24 " />
+          <Button value="공개하기" onClick={() => {}} className="ml-5 w-24" />
+        </div>
+      </section>
+      <QuizChart
+        quizzes={quizList}
+        changeSelect={(idx, checked) => {
+          if (checked) selectedQuizzes.push(idx);
+          else {
+            const index = selectedQuizzes.findIndex((v) => v === idx);
+            selectedQuizzes.splice(index, 1);
+          }
+        }}
       />
-      <QuizChart quizzes={quizList} />
     </>
   );
 }
