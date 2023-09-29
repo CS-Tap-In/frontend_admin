@@ -1,4 +1,5 @@
-import { ChangeEvent, ChangeEventHandler } from "react";
+"use client";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
   quiz: QuizResponse;
@@ -6,6 +7,9 @@ type Props = {
 };
 
 export default function QuizBlock({ quiz, onChange }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <div key={quiz.id} className="bg-white w-full flex p-2 rounded-xl">
       <input

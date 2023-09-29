@@ -1,7 +1,7 @@
 "use client";
 import QuizFilter from "./QuizFilter";
 import QuizChart from "./QuizChart";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { QUIZ_API } from "@/service/quiz";
 import { getCookie } from "cookies-next";
 import Button from "../Button";
@@ -22,17 +22,9 @@ export default function QuizManagement({ categories }: Props) {
       .catch(() => {});
   }, [params]);
 
-  const filterQuizzes = (e: ChangeEvent<HTMLSelectElement>) => {
+  const filterQuizzes = (addedParams: QuizParams) => {
     setParams((params) => {
-      const newParams = { ...params };
-      if (e.target.name === "category") {
-        newParams.category = e.target.value;
-      } else if (e.target.name === "author") {
-        newParams.st = "author";
-        newParams.keyword = e.target.value;
-      }
-
-      return newParams;
+      return { ...params, ...addedParams };
     });
   };
 
@@ -45,11 +37,7 @@ export default function QuizManagement({ categories }: Props) {
   return (
     <>
       <section className="flex justify-between my-5 mr-5">
-        <QuizFilter
-          categories={categories}
-          authors={[]}
-          onChange={filterQuizzes}
-        />
+        <QuizFilter categories={categories} changeFilter={filterQuizzes} />
         <div>
           <Button value="숨기기" onClick={() => {}} className="ml-5 w-24 " />
           <Button value="공개하기" onClick={() => {}} className="ml-5 w-24" />
