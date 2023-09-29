@@ -11,7 +11,8 @@ type Props = {
 
 export default function QuizApprovement({ categories }: Props) {
   const [quizList, setQuizList] = useState<QuizResponse[]>([]);
-  const [params, setParams] = useState<QuizParams>({});
+  const [params, setParams] = useState<QuizParams>({ status: "UNAPPROVED" });
+  const selectedQuizzes: number[] = [];
 
   const getQuizzes = useCallback(() => {
     QUIZ_API.getQuizzes(getCookie("access_token"), params)
@@ -27,11 +28,15 @@ export default function QuizApprovement({ categories }: Props) {
     });
   };
 
+  const changeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      filterQuizzes({ rejected: "Y" });
+    } else filterQuizzes({ rejected: "N" });
+  };
+
   useEffect(() => {
     getQuizzes();
   }, [params, getQuizzes]);
-
-  const selectedQuizzes: number[] = [];
 
   return (
     <>
@@ -39,7 +44,11 @@ export default function QuizApprovement({ categories }: Props) {
         <QuizFilter categories={categories} changeFilter={filterQuizzes} />
         <div className="flex">
           <div className="self-center mr-3">반려된 문제</div>
-          <input type="checkbox" className="w-5" />
+          <input
+            type="checkbox"
+            className="w-5"
+            onChange={changeCheckboxHandler}
+          />
         </div>
       </section>
       <QuizChart
