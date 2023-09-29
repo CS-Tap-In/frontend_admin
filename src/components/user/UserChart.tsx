@@ -9,7 +9,7 @@ type Props = {
 export default function UserChart({ users }: Props) {
   return (
     <div className="w-full px-5 overflow-y-scroll flex flex-col gap-1">
-      <div className="bg-tapYellow w-full flex p-2 rounded-xl">
+      <div className="bg-tapBlue w-full flex p-2 rounded-xl text-white">
         <div className="inline-block flex-auto w-4 text-center text-ellipsis overflow-hidden whitespace-nowrap">
           고유 번호
         </div>

@@ -39,8 +39,16 @@ export default function QuizManagement({ categories }: Props) {
       <section className="flex justify-between my-5 mr-5">
         <QuizFilter categories={categories} changeFilter={filterQuizzes} />
         <div>
-          <Button value="숨기기" onClick={() => {}} className="ml-5 w-24 " />
-          <Button value="공개하기" onClick={() => {}} className="ml-5 w-24" />
+          <Button
+            value="숨기기"
+            onClick={() => {}}
+            className="ml-5 w-24 bg-red-400"
+          />
+          <Button
+            value="공개하기"
+            onClick={() => {}}
+            className="ml-2 w-24 bg-lime-300"
+          />
         </div>
       </section>
       <QuizChart
