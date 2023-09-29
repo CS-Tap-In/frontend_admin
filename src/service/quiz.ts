@@ -1,24 +1,24 @@
-import axios, { AxiosResponse } from "axios";
 import { authInstance } from ".";
 
+type TokenType = string | undefined;
+
 const QUIZ_API = {
-  // createCategory: ({ title }: { title: string }) =>
-  //   authInstance().post("/quizzes/categories", { title }),
-  getCategories: (token: string | undefined): Promise<Category[]> =>
-    authInstance(token)
-      .get("/quizzes/categories")
-      .then((res) => res.data),
-  // getQuizzes: () => authInstance().get("/quizzes"),
-  createQuiz: (token: string | undefined, quizInfo: Quiz) =>
+  getCategories: (token: TokenType) =>
+    authInstance(token).get("/quizzes/categories"),
+  createCategory: (token: TokenType, title: string) =>
+    authInstance(token).post("/quizzes/categories", { title }),
+  deleteCategory: (token: TokenType, idx: number) =>
+    authInstance(token).delete(`/quizzes/categories/${idx}`),
+  // updateCategory : (token:string|undefined,idx:string)=>authInstance(token).
+  getQuizzes: (token: TokenType, params?: QuizParams) =>
+    authInstance(token).get("/quizzes", { params }),
+  createQuiz: (token: TokenType, quizInfo: Quiz) =>
     authInstance(token).post("/quizzes", quizInfo),
   // modifyQuiz: (quizInfo: Quiz) =>
   //   authInstance().put(`/quizzes/${quizInfo.categoryId}`, quizInfo),
   // deleteQuiz: (quizId: number) => authInstance().delete(`/quizzes/${quizId}`),
-  // getQuizDetail: (quizId: number) => authInstance().get(`/quizzes/${quizId}`),
-  // fetchCategories: async (token: string): Promise<Category[]> =>
-  //   fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/admin/quizzes/categories`, {
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   }).then((res) => res.json()),
+  getQuizDetail: (token: TokenType, quizId: number) =>
+    authInstance(token).get(`/quizzes/${quizId}`),
 };
 
 export { QUIZ_API };

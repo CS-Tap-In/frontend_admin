@@ -8,7 +8,7 @@ export default function SideNavigation() {
         <Link href={"/user"} className="text-2xl my-5 text-right">
           회원 관리
         </Link>
-        <Link href={"/quiz"} className="text-2xl text-right">
+        <Link href={"/quiz/manage"} className="text-2xl text-right">
           문제 관리
         </Link>
         <Link href={"/quiz/category"} className="text-right">
