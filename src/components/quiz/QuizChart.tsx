@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import QuizBlock from "./QuizBlock";
 
 type Props = {
-  quizzes: Quiz[];
+  quizzes: QuizResponse[];
 };
 export default function QuizChart({ quizzes }: Props) {
   return (

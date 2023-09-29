@@ -5,12 +5,22 @@ interface Category {
 
 type StatusType = "PUBLIC" | "PRIVATE" | "UNAPPROVED" | "REJECTED";
 
-interface Quiz {
+interface QuizRequest {
   problem: string;
   title: string;
   answer: string[];
   categoryId: number;
   status: StatusType;
+}
+
+interface QuizResponse {
+  categoryId: number;
+  categoryTitle: string;
+  id: number;
+  title: string;
+  problem: string;
+  status: StatusType;
+  createdAt: string;
 }
 
 interface QuizDetail {

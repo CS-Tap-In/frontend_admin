@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function QuizManagement({ categories }: Props) {
-  const [quizList, setQuizList] = useState<Quiz[]>([]);
+  const [quizList, setQuizList] = useState<QuizResponse[]>([]);
   const [params, setParams] = useState<QuizParams>({});
 
   const getQuizzes = useCallback(() => {

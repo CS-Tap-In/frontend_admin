@@ -1,5 +1,5 @@
 type Props = {
-  quiz: Quiz;
+  quiz: QuizResponse;
 };
 
 export default function QuizBlock({ quiz }: Props) {
