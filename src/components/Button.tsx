@@ -13,14 +13,13 @@ export default function Button({
   onClick,
   disabled = false,
   className,
-  bgColor,
 }: Prop) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`${
-        disabled ? "bg-tapGrey" : bgColor && "bg-tapYellow"
+        disabled ? "bg-tapGrey" : "bg-tapYellow"
       } h-10 rounded-2xl px-3 font-bold pt-1 ${className}`}
     >
       {value}
