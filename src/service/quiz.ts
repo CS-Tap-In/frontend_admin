@@ -27,6 +27,8 @@ const QUIZ_API = {
     authInstance(token).patch(`/quizzes/${quizId}/status`, {
       status: "REJECTED",
     }),
+  changeQuizzesStatus: (token: TokenType, quizIds: number[], status: string) =>
+    authInstance(token).patch(`/quizzes/status`, { quizIds, status }),
 };
 
 export { QUIZ_API };

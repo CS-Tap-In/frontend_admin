@@ -13,6 +13,7 @@ type Props = {
 export default function QuizManagement({ categories }: Props) {
   const [quizList, setQuizList] = useState<QuizResponse[]>([]);
   const [params, setParams] = useState<QuizParams>({});
+  const [selectedQuizzes, setSelectedQuizzes] = useState<number[]>([]);
 
   const getQuizzes = useCallback(() => {
     QUIZ_API.getQuizzes(getCookie("access_token"), params)
@@ -32,8 +33,6 @@ export default function QuizManagement({ categories }: Props) {
     getQuizzes();
   }, [params, getQuizzes]);
 
-  const selectedQuizzes: number[] = [];
-
   return (
     <>
       <section className="flex justify-between my-5 mr-5">
@@ -41,23 +40,51 @@ export default function QuizManagement({ categories }: Props) {
         <div>
           <Button
             value="숨기기"
-            onClick={() => {}}
+            onClick={() => {
+              QUIZ_API.changeQuizzesStatus(
+                getCookie("access_token"),
+                selectedQuizzes,
+                "PRIVATE"
+              )
+                .then((res) => {
+                  getQuizzes();
+                  setSelectedQuizzes([]);
+                })
+                .catch();
+            }}
             className="ml-5 w-24 bg-red-400"
           />
           <Button
             value="공개하기"
-            onClick={() => {}}
+            onClick={() => {
+              QUIZ_API.changeQuizzesStatus(
+                getCookie("access_token"),
+                selectedQuizzes,
+                "PUBLIC"
+              )
+                .then((res) => {
+                  getQuizzes();
+                  setSelectedQuizzes([]);
+                })
+                .catch();
+            }}
             className="ml-2 w-24 bg-lime-300"
           />
         </div>
       </section>
       <QuizChart
         quizzes={quizList}
+        selectedQuizzes={selectedQuizzes}
         changeSelect={(idx, checked) => {
-          if (checked) selectedQuizzes.push(idx);
-          else {
-            const index = selectedQuizzes.findIndex((v) => v === idx);
-            selectedQuizzes.splice(index, 1);
+          if (checked) {
+            setSelectedQuizzes((prevState) => [...prevState, idx]);
+          } else {
+            setSelectedQuizzes((prevState) => {
+              const curArray = [...prevState];
+              const index = prevState.findIndex((v) => v === idx);
+              curArray.splice(index, 1);
+              return curArray;
+            });
           }
         }}
       />

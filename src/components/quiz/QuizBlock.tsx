@@ -4,9 +4,10 @@ import { usePathname, useRouter } from "next/navigation";
 type Props = {
   quiz: QuizResponse;
   onChange: (i: number, checked: boolean) => void;
+  isSelect: boolean;
 };
 
-export default function QuizBlock({ quiz, onChange }: Props) {
+export default function QuizBlock({ quiz, onChange, isSelect }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -15,6 +16,7 @@ export default function QuizBlock({ quiz, onChange }: Props) {
       <input
         type="checkbox"
         className="inline-block flex-auto w-4"
+        checked={isSelect}
         onChange={(e) => onChange(quiz.id, e.target.checked)}
       />
       <div className="inline-block flex-auto w-4 text-center text-ellipsis overflow-hidden whitespace-nowrap">

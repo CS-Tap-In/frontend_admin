@@ -4,8 +4,13 @@ import QuizBlock from "./QuizBlock";
 type Props = {
   quizzes: QuizResponse[];
   changeSelect: (i: number, checked: boolean) => void;
+  selectedQuizzes: number[];
 };
-export default function QuizChart({ quizzes, changeSelect }: Props) {
+export default function QuizChart({
+  quizzes,
+  changeSelect,
+  selectedQuizzes,
+}: Props) {
   return (
     <div className="w-full px-5 overflow-y-auto flex flex-col gap-1">
       <div className="bg-tapBlue w-full flex p-2 rounded-xl text-white">
@@ -30,7 +35,12 @@ export default function QuizChart({ quizzes, changeSelect }: Props) {
         </div>
       </div>
       {quizzes.map((quiz) => (
-        <QuizBlock key={quiz.id} quiz={quiz} onChange={changeSelect} />
+        <QuizBlock
+          key={quiz.id}
+          quiz={quiz}
+          onChange={changeSelect}
+          isSelect={selectedQuizzes.includes(quiz.id)}
+        />
       ))}
     </div>
   );
