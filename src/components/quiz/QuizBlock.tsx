@@ -23,7 +23,10 @@ export default function QuizBlock({ quiz, onChange }: Props) {
       <div className="inline-block flex-auto w-28 text-center text-ellipsis overflow-hidden whitespace-nowrap">
         {quiz.categoryTitle}
       </div>
-      <div className="inline-block flex-auto w-28 text-center text-ellipsis overflow-hidden whitespace-nowrap">
+      <div
+        className="inline-block flex-auto w-28 text-center text-ellipsis overflow-hidden whitespace-nowrap cursor-pointer hover:text-tapBlue hover:font-bold"
+        onClick={() => router.push(`${pathname}/${quiz.id}`)}
+      >
         {quiz.title}
       </div>
       <div className="inline-block flex-auto w-28 text-center text-ellipsis overflow-hidden whitespace-nowrap">
