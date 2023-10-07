@@ -4,17 +4,19 @@ import QuizBlock from "./QuizBlock";
 type Props = {
   quizzes: QuizResponse[];
   changeSelect: (i: number, checked: boolean) => void;
-  selectedQuizzes: number[];
+  selectedQuizzes?: number[];
+  isSelectable?: boolean;
 };
 export default function QuizChart({
   quizzes,
   changeSelect,
   selectedQuizzes,
+  isSelectable = true,
 }: Props) {
   return (
     <div className="w-full px-5 overflow-y-auto flex flex-col gap-1">
       <div className="bg-tapBlue w-full flex p-2 rounded-xl text-white">
-        <div className="flex-auto w-4" />
+        {isSelectable && <div className="flex-auto w-4" />}
         <div className="inline-block flex-auto w-4 text-center text-ellipsis overflow-hidden whitespace-nowrap">
           고유 번호
         </div>
@@ -39,7 +41,8 @@ export default function QuizChart({
           key={quiz.id}
           quiz={quiz}
           onChange={changeSelect}
-          isSelect={selectedQuizzes.includes(quiz.id)}
+          isSelect={selectedQuizzes?.includes(quiz.id)}
+          isSelectable={isSelectable}
         />
       ))}
     </div>

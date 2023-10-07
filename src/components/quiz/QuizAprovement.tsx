@@ -53,6 +53,7 @@ export default function QuizApprovement({ categories }: Props) {
       </section>
       <QuizChart
         quizzes={quizList}
+        isSelectable={false}
         changeSelect={(idx, checked) => {
           if (checked) selectedQuizzes.push(idx);
           else {
