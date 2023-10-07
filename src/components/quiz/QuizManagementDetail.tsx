@@ -3,11 +3,12 @@ import { QUIZ_API } from "@/service/quiz";
 import QuizDetailChart from "./QuizDetailChart";
 import { getCookie } from "cookies-next";
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function QuizManagementDetail() {
   const [detail, setDetail] = useState();
   const { slug } = useParams();
+  const router = useRouter();
 
   const getDetail = useCallback(() => {
     QUIZ_API.getQuizDetail(getCookie("access_token"), Number(slug))
@@ -29,11 +30,18 @@ export default function QuizManagementDetail() {
       leftBtnValue="수정"
       leftBtnOnClick={(id: number, quizInfo: PatchQuizDto) => {
         QUIZ_API.updateQuiz(getCookie("access_token"), id, quizInfo)
-          .then(() => {})
+          .then(() => {
+            alert("수정되었습니다.");
+          })
           .catch(() => {});
       }}
       rightBtnValue="삭제"
-      rightBtnOnClick={() => {}}
+      rightBtnOnClick={(id: number) => {
+        QUIZ_API.deleteQuiz(getCookie("access_token"), id).then((res) => {
+          alert("삭제되었습니다.");
+          router.back();
+        });
+      }}
     />
   );
 }

@@ -9,16 +9,24 @@ const QUIZ_API = {
     authInstance(token).post("/quizzes/categories", { title }),
   deleteCategory: (token: TokenType, idx: number) =>
     authInstance(token).delete(`/quizzes/categories/${idx}`),
-  // updateCategory : (token:string|undefined,idx:string)=>authInstance(token).
   getQuizzes: (token: TokenType, params?: QuizParams) =>
     authInstance(token).get("/quizzes", { params }),
-  createQuiz: (token: TokenType, quizInfo: Quiz) =>
+  createQuiz: (token: TokenType, quizInfo: QuizRequest) =>
     authInstance(token).post("/quizzes", quizInfo),
-  // modifyQuiz: (quizInfo: Quiz) =>
-  //   authInstance().put(`/quizzes/${quizInfo.categoryId}`, quizInfo),
-  // deleteQuiz: (quizId: number) => authInstance().delete(`/quizzes/${quizId}`),
+  updateQuiz: (token: TokenType, quizId: number, quizInfo: PatchQuizDto) =>
+    authInstance(token).put(`/quizzes/${quizId}`, quizInfo),
+  deleteQuiz: (token: TokenType, quizId: number) =>
+    authInstance(token).delete(`/quizzes/${quizId}`),
   getQuizDetail: (token: TokenType, quizId: number) =>
     authInstance(token).get(`/quizzes/${quizId}`),
+  approveQuiz: (token: TokenType, quizId: number) =>
+    authInstance(token).patch(`/quizzes/${quizId}/status`, {
+      status: "PUBLIC",
+    }),
+  rejectQuiz: (token: TokenType, quizId: number) =>
+    authInstance(token).patch(`/quizzes/${quizId}/status`, {
+      status: "REJECTED",
+    }),
 };
 
 export { QUIZ_API };
