@@ -10,6 +10,7 @@ type Props = {
   leftBtnOnClick: (id: number, detail: PatchQuizDto) => void;
   rightBtnValue: string;
   rightBtnOnClick: (id: number) => void;
+  readonly?: boolean;
 };
 export default function QuizDetailChart({
   detail,
@@ -17,6 +18,7 @@ export default function QuizDetailChart({
   leftBtnValue,
   rightBtnOnClick,
   rightBtnValue,
+  readonly,
 }: Props) {
   const formInfo = {
     problem: detail.problem,
@@ -33,7 +35,7 @@ export default function QuizDetailChart({
     );
   }, []);
 
-  if (!detail) return <div>로딩중...</div>;
+  if (!detail || categories.length === 0) return <div>로딩중...</div>;
 
   return (
     <section className="w-4/5 px-20 pt-10 overflow-y-auto flex flex-col bg-white min-h-1/2 mt-10 mx-auto rounded-2xl gap-5">
@@ -66,10 +68,9 @@ export default function QuizDetailChart({
           id="category"
           className="ml-3 h-12 w-80 bg-tapGrey rounded-2xl"
           onChange={(e) => (formInfo["categoryId"] = Number(e.target.value))}
+          disabled={readonly}
+          defaultValue={detail.categoryId}
         >
-          <option value="" hidden>
-            ==필수==
-          </option>
           {categories?.map((category) => (
             <option value={category.id} key={category.id}>
               {category.title}
@@ -87,6 +88,7 @@ export default function QuizDetailChart({
           defaultValue={detail.title}
           onChange={(e) => (formInfo["title"] = e.target.value)}
           className="bg-tapGrey h-12 w-80 rounded-2xl p-5 ml-3"
+          disabled={readonly}
         />
       </div>
       <div className="mx-auto">
@@ -101,6 +103,7 @@ export default function QuizDetailChart({
           className="bg-tapGrey h-32 w-80 rounded-2xl p-5  ml-3"
           onChange={(e) => (formInfo["problem"] = e.target.value)}
           defaultValue={detail.problem}
+          disabled={readonly}
         ></textarea>
       </div>
       <div className="mx-auto">
@@ -113,6 +116,7 @@ export default function QuizDetailChart({
           defaultValue={detail.answer}
           onChange={(e) => (formInfo["answer"] = e.target.value.split(","))}
           className="bg-tapGrey h-12 w-80 rounded-2xl p-5 ml-3"
+          disabled={readonly}
         />
       </div>
       <div className="w-full flex justify-evenly my-10">

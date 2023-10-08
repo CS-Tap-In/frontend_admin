@@ -9,7 +9,6 @@ export default async function QuizApprovePage() {
   if (!token) {
     redirect("/");
   }
-
   const categories = await QUIZ_API.getCategories(token);
 
   return (
