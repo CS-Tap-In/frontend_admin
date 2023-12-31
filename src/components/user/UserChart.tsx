@@ -1,12 +1,14 @@
 "use client";
 
+import useSWR from "swr";
 import UserBlock from "./UserBlock";
+import { API_PATH } from "@/service/path";
+import { GetUserDto } from "@/types/response/GetUser.dto";
 
-type Props = {
-  users: User[];
-};
+export default function UserChart() {
+  const { data } = useSWR<GetUserDto>(API_PATH.GET_USER);
+  //TODO 페이지네이션
 
-export default function UserChart({ users }: Props) {
   return (
     <div className="w-full px-5 overflow-y-scroll flex flex-col gap-1">
       <div className="bg-tapBlue w-full flex p-2 rounded-xl text-white">
@@ -23,7 +25,7 @@ export default function UserChart({ users }: Props) {
           생성일
         </div>
       </div>
-      {users.map((user) => (
+      {data?.content.map((user) => (
         <UserBlock userInfo={user} key={user.id} />
       ))}
     </div>

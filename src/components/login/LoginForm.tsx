@@ -1,9 +1,9 @@
 "use client";
 import { AxiosError } from "axios";
-import { RESPONSE_STATUS } from "@/service";
+import { RESPONSE_STATUS, axiosStore } from "@/service";
 import { LOGIN_API } from "@/service/login";
 import { useRouter } from "next/navigation";
-import React, { MouseEvent, useRef, useState } from "react";
+import { MouseEvent, useRef, useState } from "react";
 import { setCookie } from "cookies-next";
 
 export default function LoginForm() {
@@ -29,7 +29,9 @@ export default function LoginForm() {
       password: pwdRef.current?.value,
     })
       .then((res) => {
-        setCookie("access_token", res.data.accessToken);
+        const token = res.data.accessToken;
+        setCookie("access_token", token);
+        axiosStore.setToken(token);
         router.push("/user");
       })
       .catch((err: AxiosError) => {

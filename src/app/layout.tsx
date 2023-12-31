@@ -1,3 +1,4 @@
+import SWRConfigContext from "@/context/SWRConfigContext";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -18,7 +19,7 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <body className="flex flex-col max-w-screen-2xl mx-auto">
         <main className="flex min-h-screen items-center justify-center h-screen">
-          {children}
+          <SWRConfigContext>{children}</SWRConfigContext>
         </main>
       </body>
     </html>
