@@ -4,9 +4,9 @@ import { GetQuizzesDto } from "@/types/response/GetQuizzes.dto";
 import { useState } from "react";
 import useSWR from "swr";
 
-export default function useQuizzes() {
+export default function useQuizzes(defaultParams?: QuizParams) {
   const [selectedQuizzes, setSelectedQuizzes] = useState<number[]>([]);
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState({ ...defaultParams });
   const { data, isLoading, error, mutate } = useSWR<GetQuizzesDto>([
     API_PATH.GET_QUIZZES,
     params,

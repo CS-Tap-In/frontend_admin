@@ -4,7 +4,7 @@ import QuizBlock from "./QuizBlock";
 
 type Props = {
   quizzes: Quiz[];
-  changeSelect: (i: number, checked: boolean) => void;
+  changeSelect?: (i: number, checked: boolean) => void;
   isSelectable?: boolean;
   selectedQuizzes?: number[];
 };
@@ -41,7 +41,7 @@ export default function QuizChart({
         <QuizBlock
           key={quiz.id}
           quiz={quiz}
-          onChange={changeSelect}
+          onChange={changeSelect || (() => {})}
           isSelect={selectedQuizzes?.includes(quiz.id)}
           isSelectable={isSelectable}
         />
