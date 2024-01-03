@@ -6,7 +6,7 @@ import { API_PATH } from "@/service/path";
 import { GetUserDto } from "@/types/response/GetUser.dto";
 
 export default function UserChart() {
-  const { data } = useSWR<GetUserDto>(API_PATH.GET_USER);
+  const { data } = useSWR<GetUserDto>([API_PATH.GET_USER]);
   //TODO 페이지네이션
 
   return (
