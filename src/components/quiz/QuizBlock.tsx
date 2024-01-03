@@ -1,8 +1,9 @@
 "use client";
+import { Quiz } from "@/types/response/GetQuizzes.dto";
 import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
-  quiz: QuizResponse;
+  quiz: Quiz;
   onChange: (i: number, checked: boolean) => void;
   isSelect?: boolean;
   isSelectable?: boolean;

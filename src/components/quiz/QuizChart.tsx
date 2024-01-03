@@ -1,11 +1,12 @@
 "use client";
+import { Quiz } from "@/types/response/GetQuizzes.dto";
 import QuizBlock from "./QuizBlock";
 
 type Props = {
-  quizzes: QuizResponse[];
+  quizzes: Quiz[];
   changeSelect: (i: number, checked: boolean) => void;
-  selectedQuizzes?: number[];
   isSelectable?: boolean;
+  selectedQuizzes?: number[];
 };
 export default function QuizChart({
   quizzes,

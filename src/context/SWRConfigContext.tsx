@@ -12,8 +12,8 @@ function SWRConfigContext({ children }: PropsWithChildren) {
   return (
     <SWRConfig
       value={{
-        fetcher: (url: string) =>
-          axiosStore.authInstance.get(url).then((res) => res.data),
+        fetcher: ([url, params]: [string, Object]) =>
+          axiosStore.authInstance.get(url, { params }).then((res) => res.data),
       }}
     >
       {children}

@@ -1,37 +1,28 @@
 "use client";
 import QuizFilter from "./QuizFilter";
 import QuizChart from "./QuizChart";
-import { useCallback, useEffect, useState } from "react";
-import { QUIZ_API } from "@/service/quiz";
-import { getCookie } from "cookies-next";
 import Button from "../Button";
+import useQuizzes from "@/hooks/useQuizzes";
 
 type Props = {
   categories: Category[];
 };
 
 export default function QuizManagement({ categories }: Props) {
-  const [quizList, setQuizList] = useState<QuizResponse[]>([]);
-  const [params, setParams] = useState<QuizParams>({});
-  const [selectedQuizzes, setSelectedQuizzes] = useState<number[]>([]);
-
-  const getQuizzes = useCallback(() => {
-    QUIZ_API.getQuizzes(getCookie("access_token"), params)
-      .then((res) => {
-        setQuizList(res.data.content);
-      })
-      .catch(() => {});
-  }, [params]);
+  const {
+    data: quizList,
+    selectQuiz,
+    changeQuizzesStatus,
+    unselectQuiz,
+    selectedQuizzes,
+    setParams,
+  } = useQuizzes();
 
   const filterQuizzes = (addedParams: QuizParams) => {
     setParams((params) => {
       return { ...params, ...addedParams };
     });
   };
-
-  useEffect(() => {
-    getQuizzes();
-  }, [params, getQuizzes]);
 
   return (
     <>
@@ -41,50 +32,29 @@ export default function QuizManagement({ categories }: Props) {
           <Button
             value="숨기기"
             onClick={() => {
-              QUIZ_API.changeQuizzesStatus(
-                getCookie("access_token"),
-                selectedQuizzes,
-                "PRIVATE"
-              )
-                .then((res) => {
-                  getQuizzes();
-                  setSelectedQuizzes([]);
-                })
-                .catch();
+              if (selectedQuizzes.length <= 0) return;
+              changeQuizzesStatus("PRIVATE");
             }}
             className="ml-5 w-24 bg-red-400"
           />
           <Button
             value="공개하기"
             onClick={() => {
-              QUIZ_API.changeQuizzesStatus(
-                getCookie("access_token"),
-                selectedQuizzes,
-                "PUBLIC"
-              )
-                .then((res) => {
-                  getQuizzes();
-                  setSelectedQuizzes([]);
-                })
-                .catch();
+              if (selectedQuizzes.length <= 0) return;
+              changeQuizzesStatus("PUBLIC");
             }}
             className="ml-2 w-24 bg-lime-300"
           />
         </div>
       </section>
       <QuizChart
-        quizzes={quizList}
+        quizzes={quizList ?? []}
         selectedQuizzes={selectedQuizzes}
         changeSelect={(idx, checked) => {
           if (checked) {
-            setSelectedQuizzes((prevState) => [...prevState, idx]);
+            selectQuiz(idx);
           } else {
-            setSelectedQuizzes((prevState) => {
-              const curArray = [...prevState];
-              const index = prevState.findIndex((v) => v === idx);
-              curArray.splice(index, 1);
-              return curArray;
-            });
+            unselectQuiz(idx);
           }
         }}
       />

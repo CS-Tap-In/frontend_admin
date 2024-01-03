@@ -1,4 +1,5 @@
 import { authInstance } from ".";
+import { axiosStore } from ".";
 
 type TokenType = string | undefined;
 
@@ -27,8 +28,8 @@ const QUIZ_API = {
     authInstance(token).patch(`/quizzes/${quizId}/status`, {
       status: "REJECTED",
     }),
-  changeQuizzesStatus: (token: TokenType, quizIds: number[], status: string) =>
-    authInstance(token).patch(`/quizzes/status`, { quizIds, status }),
+  changeQuizzesStatus: (quizIds: number[], status: string) =>
+    axiosStore.authInstance.patch(`/quizzes/status`, { quizIds, status }),
 };
 
 export { QUIZ_API };
