@@ -28,6 +28,12 @@ export default function useQuizzes() {
     });
   };
 
+  const filterQuizzes = (addedParams: QuizParams) => {
+    setParams((params) => {
+      return { ...params, ...addedParams };
+    });
+  };
+
   return {
     data: data?.content,
     isLoading,
@@ -36,6 +42,6 @@ export default function useQuizzes() {
     unselectQuiz,
     changeQuizzesStatus,
     selectedQuizzes,
-    setParams,
+    filterQuizzes,
   };
 }

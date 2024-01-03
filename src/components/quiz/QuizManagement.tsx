@@ -15,14 +15,8 @@ export default function QuizManagement({ categories }: Props) {
     changeQuizzesStatus,
     unselectQuiz,
     selectedQuizzes,
-    setParams,
+    filterQuizzes,
   } = useQuizzes();
-
-  const filterQuizzes = (addedParams: QuizParams) => {
-    setParams((params) => {
-      return { ...params, ...addedParams };
-    });
-  };
 
   return (
     <>
