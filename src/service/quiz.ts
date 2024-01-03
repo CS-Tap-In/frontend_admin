@@ -6,10 +6,10 @@ type TokenType = string | undefined;
 const QUIZ_API = {
   getCategories: (token: TokenType) =>
     authInstance(token).get("/quizzes/categories"),
-  createCategory: (token: TokenType, title: string) =>
-    authInstance(token).post("/quizzes/categories", { title }),
-  deleteCategory: (token: TokenType, idx: number) =>
-    authInstance(token).delete(`/quizzes/categories/${idx}`),
+  createCategory: (title: string) =>
+    axiosStore.authInstance.post("/quizzes/categories", { title }),
+  deleteCategory: (idx: number) =>
+    axiosStore.authInstance.delete(`/quizzes/categories/${idx}`),
   getQuizzes: (token: TokenType, params?: QuizParams) =>
     authInstance(token).get("/quizzes", { params }),
   createQuiz: (token: TokenType, quizInfo: QuizRequest) =>

@@ -1,5 +1,4 @@
 import CategoryChart from "@/components/quiz/CategoryChart";
-import React from "react";
 
 export default async function CategoryPage() {
   return (
