@@ -3,15 +3,14 @@ import QuizFilter from "./QuizFilter";
 import QuizChart from "./QuizChart";
 import { ChangeEvent } from "react";
 import useQuizzes from "@/hooks/useQuizzes";
+import useCategory from "@/hooks/useCategory";
 
-type Props = {
-  categories: Category[];
-};
-
-export default function QuizApprovement({ categories }: Props) {
+export default function QuizApprovement() {
   const { data: quizList, filterQuizzes } = useQuizzes({
     status: "UNAPPROVED",
   });
+  const { data: categories } = useCategory();
+
   const changeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       filterQuizzes({ rejected: "Y" });
@@ -21,7 +20,10 @@ export default function QuizApprovement({ categories }: Props) {
   return (
     <>
       <section className="flex justify-between my-5 mr-5">
-        <QuizFilter categories={categories} changeFilter={filterQuizzes} />
+        <QuizFilter
+          categories={categories ?? []}
+          changeFilter={filterQuizzes}
+        />
         <div className="flex">
           <div className="self-center mr-3">반려된 문제</div>
           <input

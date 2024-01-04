@@ -1,11 +1,10 @@
 "use client";
-import { QUIZ_API } from "@/service/quiz";
+import { GetQuizDetailDto } from "@/types/response/GetQuizDetail.dto";
 import Button from "../Button";
-import { useState, useEffect } from "react";
-import { getCookie } from "cookies-next";
+import useCategory from "@/hooks/useCategory";
 
 type Props = {
-  detail: QuizDetail;
+  detail: GetQuizDetailDto;
   leftBtnValue: string;
   leftBtnOnClick: (id: number, detail: PatchQuizDto) => void;
   rightBtnValue: string;
@@ -26,16 +25,9 @@ export default function QuizDetailChart({
     answer: detail.answer,
     categoryId: detail.categoryId,
   };
+  const { data: categories } = useCategory();
 
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    QUIZ_API.getCategories(getCookie("access_token")).then((res) =>
-      setCategories(res.data)
-    );
-  }, []);
-
-  if (!detail || categories.length === 0) return <div>로딩중...</div>;
+  if (!detail || !categories) return <div>로딩중...</div>;
 
   return (
     <section className="w-4/5 px-20 pt-10 overflow-y-auto flex flex-col bg-white min-h-1/2 mt-10 mx-auto rounded-2xl gap-5">

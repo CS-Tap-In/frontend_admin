@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 import { MouseEvent, useRef, useState } from "react";
 import useSWR from "swr";
 import { API_PATH } from "@/service/path";
+import { Category } from "@/types/response/GetCategories.dto";
 
 export default function QuizForm() {
   const { data: categories } = useSWR<Category[]>([API_PATH.GET_CATEGORIES]);

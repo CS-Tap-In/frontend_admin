@@ -1,3 +1,5 @@
+import { StatusType } from "../request/CreateQuiz.dto";
+
 export interface Quiz {
   categoryId: number;
   categoryTitle: string;
@@ -13,4 +15,14 @@ export interface GetQuizzesDto {
   size: number;
   page: number;
   totalElements: number;
+}
+
+export interface QuizParams {
+  st?: "author" | "title";
+  keyword?: string;
+  page?: number;
+  size?: number;
+  status?: StatusType;
+  rejected?: "Y" | "N";
+  category?: string;
 }

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance } from "axios";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_API_DOMAIN}/admin`;
 
@@ -24,27 +24,9 @@ class AxiosStore {
 
 const axiosStore = new AxiosStore();
 
-//TODO 다 리펙토링 한 후 지워야함
-axios.defaults.baseURL = BASE_URL;
-axios.defaults.headers.post["Content-Type"] = "application/json";
-
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-});
-
-const authInstance = (
-  token: string | undefined,
-  options?: AxiosRequestConfig
-) => {
-  return axios.create({
-    headers: { Authorization: `Bearer ${token}` },
-    ...options,
-  });
-};
-
 const RESPONSE_STATUS = {
   NO_AUTHORIZED: 401,
   BAD_REQUEST: 400,
 };
 
-export { axiosStore, axiosInstance, authInstance, RESPONSE_STATUS };
+export { axiosStore, RESPONSE_STATUS };

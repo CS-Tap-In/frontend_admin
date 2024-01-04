@@ -3,12 +3,9 @@ import QuizFilter from "./QuizFilter";
 import QuizChart from "./QuizChart";
 import Button from "../Button";
 import useQuizzes from "@/hooks/useQuizzes";
+import useCategory from "@/hooks/useCategory";
 
-type Props = {
-  categories: Category[];
-};
-
-export default function QuizManagement({ categories }: Props) {
+export default function QuizManagement() {
   const {
     data: quizList,
     selectQuiz,
@@ -18,10 +15,15 @@ export default function QuizManagement({ categories }: Props) {
     filterQuizzes,
   } = useQuizzes();
 
+  const { data: categories } = useCategory();
+
   return (
     <>
       <section className="flex justify-between my-5 mr-5">
-        <QuizFilter categories={categories} changeFilter={filterQuizzes} />
+        <QuizFilter
+          categories={categories ?? []}
+          changeFilter={filterQuizzes}
+        />
         <div>
           <Button
             value="숨기기"

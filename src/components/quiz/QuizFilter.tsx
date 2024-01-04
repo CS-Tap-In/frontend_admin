@@ -1,6 +1,8 @@
 "use client";
-import React, { MouseEvent, useRef, useState } from "react";
+import { useState } from "react";
 import Button from "../Button";
+import { Category } from "@/types/response/GetCategories.dto";
+import { QuizParams } from "@/types/response/GetQuizzes.dto";
 
 type Props = {
   categories: Category[];
