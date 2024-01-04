@@ -15,18 +15,18 @@ const QUIZ_API = {
     authInstance(token).get("/quizzes", { params }),
   createQuiz: (quizInfo: CreateQuizDto) =>
     axiosStore.authInstance.post("/quizzes", quizInfo),
-  updateQuiz: (token: TokenType, quizId: number, quizInfo: PatchQuizDto) =>
-    authInstance(token).put(`/quizzes/${quizId}`, quizInfo),
-  deleteQuiz: (token: TokenType, quizId: number) =>
-    authInstance(token).delete(`/quizzes/${quizId}`),
-  getQuizDetail: (token: TokenType, quizId: number) =>
-    authInstance(token).get(`/quizzes/${quizId}`),
-  approveQuiz: (token: TokenType, quizId: number) =>
-    authInstance(token).patch(`/quizzes/${quizId}/status`, {
+  updateQuiz: (quizId: number, quizInfo: PatchQuizDto) =>
+    axiosStore.authInstance.put(`/quizzes/${quizId}`, quizInfo),
+  deleteQuiz: (quizId: number) =>
+    axiosStore.authInstance.delete(`/quizzes/${quizId}`),
+  getQuizDetail: (quizId: number) =>
+    axiosStore.authInstance.get(`/quizzes/${quizId}`),
+  approveQuiz: (quizId: number) =>
+    axiosStore.authInstance.patch(`/quizzes/${quizId}/status`, {
       status: "PUBLIC",
     }),
-  rejectQuiz: (token: TokenType, quizId: number) =>
-    authInstance(token).patch(`/quizzes/${quizId}/status`, {
+  rejectQuiz: (quizId: number) =>
+    axiosStore.authInstance.patch(`/quizzes/${quizId}/status`, {
       status: "REJECTED",
     }),
   changeQuizzesStatus: (quizIds: number[], status: string) =>
