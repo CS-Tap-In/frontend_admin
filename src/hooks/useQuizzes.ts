@@ -1,6 +1,6 @@
 import { API_PATH } from "@/service/path";
 import { QUIZ_API } from "@/service/quiz";
-import { GetQuizzesDto } from "@/types/response/GetQuizzes.dto";
+import { GetQuizzesDto, QuizParams } from "@/types/response/GetQuizzes.dto";
 import { useState } from "react";
 import useSWR from "swr";
 
