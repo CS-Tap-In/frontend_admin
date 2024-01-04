@@ -1,3 +1,4 @@
+import { CreateQuizDto } from "@/types/request/CreateQuiz.dto";
 import { authInstance } from ".";
 import { axiosStore } from ".";
 
@@ -12,8 +13,8 @@ const QUIZ_API = {
     axiosStore.authInstance.delete(`/quizzes/categories/${idx}`),
   getQuizzes: (token: TokenType, params?: QuizParams) =>
     authInstance(token).get("/quizzes", { params }),
-  createQuiz: (token: TokenType, quizInfo: QuizRequest) =>
-    authInstance(token).post("/quizzes", quizInfo),
+  createQuiz: (quizInfo: CreateQuizDto) =>
+    axiosStore.authInstance.post("/quizzes", quizInfo),
   updateQuiz: (token: TokenType, quizId: number, quizInfo: PatchQuizDto) =>
     authInstance(token).put(`/quizzes/${quizId}`, quizInfo),
   deleteQuiz: (token: TokenType, quizId: number) =>

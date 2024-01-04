@@ -2,14 +2,12 @@
 
 import { QUIZ_API } from "@/service/quiz";
 import { AxiosError } from "axios";
-import React, { MouseEvent, useRef, useState } from "react";
-import { getCookie } from "cookies-next";
+import { MouseEvent, useRef, useState } from "react";
+import useSWR from "swr";
+import { API_PATH } from "@/service/path";
 
-type Props = {
-  categories: Category[];
-};
-
-export default function QuizForm({ categories }: Props) {
+export default function QuizForm() {
+  const { data: categories } = useSWR<Category[]>([API_PATH.GET_CATEGORIES]);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const categoryRef = useRef<HTMLSelectElement | null>(null);
   const titleRef = useRef<HTMLInputElement | null>(null);
@@ -45,7 +43,7 @@ export default function QuizForm({ categories }: Props) {
       return;
     }
     setButtonDisabled(true);
-    QUIZ_API.createQuiz(getCookie("access_token"), {
+    QUIZ_API.createQuiz({
       problem: questionRef.current.value,
       answer: answerRef.current.value.split(","),
       title: titleRef.current.value,
@@ -86,7 +84,7 @@ export default function QuizForm({ categories }: Props) {
             <option value="" hidden>
               ==필수==
             </option>
-            {categories.map((category, i) => (
+            {categories?.map((category, i) => (
               <option value={category.id} key={category.id}>
                 {category.title}
               </option>
