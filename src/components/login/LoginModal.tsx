@@ -1,7 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction } from "react";
-import Button from "../Button";
+import Button from "../common/Button";
 
 type Props = {
   message: string;

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { MouseEvent, useRef, useState } from "react";
 import { setCookie } from "cookies-next";
 import LoginModal from "./LoginModal";
-import ModalPortal from "../ModalPortal";
+import ModalPortal from "../common/ModalPortal";
 
 export default function LoginForm() {
   const [buttonDisabled, setButtonDisabled] = useState(true);

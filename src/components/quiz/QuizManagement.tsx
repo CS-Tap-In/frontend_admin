@@ -1,7 +1,7 @@
 "use client";
 import QuizFilter from "./QuizFilter";
 import QuizChart from "./QuizChart";
-import Button from "../Button";
+import Button from "../common/Button";
 import useQuizzes from "@/hooks/useQuizzes";
 import useCategory from "@/hooks/useCategory";
 

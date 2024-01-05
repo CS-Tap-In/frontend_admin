@@ -1,6 +1,6 @@
 "use client";
 import { GetQuizDetailDto } from "@/types/response/GetQuizDetail.dto";
-import Button from "../Button";
+import Button from "../common/Button";
 import useCategory from "@/hooks/useCategory";
 
 type Props = {

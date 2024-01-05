@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Button from "../Button";
+import Button from "../common/Button";
 import { Category } from "@/types/response/GetCategories.dto";
 import { QuizParams } from "@/types/response/GetQuizzes.dto";
 

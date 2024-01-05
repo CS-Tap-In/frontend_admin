@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import Button from "../Button";
+import Button from "../common/Button";
 import useCategory from "@/hooks/useCategory";
 
 export default function CategoryChart() {

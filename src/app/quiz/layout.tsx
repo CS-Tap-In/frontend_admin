@@ -1,4 +1,4 @@
-import SideNavigation from "@/components/SideNavigation";
+import SideNavigation from "@/components/common/SideNavigation";
 import React from "react";
 
 export default function QuizLayout({
