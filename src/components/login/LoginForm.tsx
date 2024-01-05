@@ -5,7 +5,7 @@ import { LOGIN_API } from "@/service/login";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useRef, useState } from "react";
 import { setCookie } from "cookies-next";
-import LoginModal from "./LoginModal";
+import DefaultModal from "../common/DefaultModal";
 import ModalPortal from "../common/ModalPortal";
 
 export default function LoginForm() {
@@ -85,7 +85,7 @@ export default function LoginForm() {
       </form>
       {modalMessage && (
         <ModalPortal>
-          <LoginModal message={modalMessage} setModal={setModalMessage} />
+          <DefaultModal message={modalMessage} setModal={setModalMessage} />
         </ModalPortal>
       )}
     </section>

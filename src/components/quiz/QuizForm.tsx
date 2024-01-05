@@ -6,6 +6,8 @@ import { MouseEvent, useRef, useState } from "react";
 import useSWR from "swr";
 import { API_PATH } from "@/service/path";
 import { Category } from "@/types/response/GetCategories.dto";
+import ModalPortal from "../common/ModalPortal";
+import DefaultModal from "../common/DefaultModal";
 
 export default function QuizForm() {
   const { data: categories } = useSWR<Category[]>([API_PATH.GET_CATEGORIES]);
@@ -15,6 +17,7 @@ export default function QuizForm() {
   const stateRef = useRef<HTMLSelectElement | null>(null);
   const questionRef = useRef<HTMLTextAreaElement | null>(null);
   const answerRef = useRef<HTMLInputElement | null>(null);
+  const [modalMessage, setModalMessage] = useState("");
 
   const isFormComplete = () => {
     return (
@@ -56,12 +59,11 @@ export default function QuizForm() {
           : "PRIVATE",
     })
       .then((res) => {
-        // TODO toast message
-
+        setModalMessage("퀴즈가 생성되었습니다.");
         setButtonDisabled(false);
       })
       .catch((err: AxiosError) => {
-        //TODO 에러 처리
+        setModalMessage("퀴즈 생성에 실패했습니다.");
       });
   };
 
@@ -163,6 +165,11 @@ export default function QuizForm() {
           onClick={createQuiz}
         />
       </div>
+      {modalMessage && (
+        <ModalPortal>
+          <DefaultModal message={modalMessage} setModal={setModalMessage} />
+        </ModalPortal>
+      )}
     </div>
   );
 }
