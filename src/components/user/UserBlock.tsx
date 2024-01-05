@@ -1,4 +1,4 @@
-import React from "react";
+import { User } from "@/types/response/GetUser.dto";
 
 type Props = {
   userInfo: User;

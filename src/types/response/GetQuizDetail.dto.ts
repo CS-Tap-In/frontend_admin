@@ -1,3 +1,5 @@
+import { StatusType } from "../request/CreateQuiz.dto";
+
 export interface GetQuizDetailDto {
   answer: string[];
   authorId: number;
