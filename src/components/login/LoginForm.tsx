@@ -5,9 +5,12 @@ import { LOGIN_API } from "@/service/login";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useRef, useState } from "react";
 import { setCookie } from "cookies-next";
+import LoginModal from "./LoginModal";
+import ModalPortal from "../ModalPortal";
 
 export default function LoginForm() {
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [modalMessage, setModalMessage] = useState("");
   const idRef = useRef<HTMLInputElement | null>(null);
   const pwdRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
@@ -30,16 +33,19 @@ export default function LoginForm() {
     })
       .then((res) => {
         const token = res.data.accessToken;
+        const refreshToken = res.data.refreshToken;
+        //TODO 토큰 저장 위치 변경
+        setCookie("refresh_token", refreshToken);
         setCookie("access_token", token);
         axiosStore.setToken(token);
         router.push("/user");
       })
       .catch((err: AxiosError) => {
         if (err.response?.status === RESPONSE_STATUS.BAD_REQUEST) {
-          //TODO 잘못된 아디비번
+          setModalMessage("잘못된 아이디 혹은 비밀번호 입니다.");
           return;
         }
-        //TODO 에러 처리
+        setModalMessage("로그인에 실패했습니다. 나중에 다시 시도해주세요.");
       });
   };
 
@@ -77,6 +83,11 @@ export default function LoginForm() {
           onClick={loginBtnClickHandler}
         />
       </form>
+      {modalMessage && (
+        <ModalPortal>
+          <LoginModal message={modalMessage} setModal={setModalMessage} />
+        </ModalPortal>
+      )}
     </section>
   );
 }
