@@ -1,9 +1,10 @@
 import { API_PATH } from "@/service/path";
 import { QUIZ_API } from "@/service/quiz";
 import { GetCategoriesDto } from "@/types/response/GetCategories.dto";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 export default function useCategory() {
+  const { mutate: globalMutate } = useSWRConfig();
   const { data, isLoading, error, mutate } = useSWR<GetCategoriesDto>([
     API_PATH.GET_CATEGORIES,
   ]);
@@ -20,7 +21,12 @@ export default function useCategory() {
     });
   };
 
-  //TODO category 수정
+  const modifyCategory = async (id: number, title: string) => {
+    return QUIZ_API.updateCategory(id, title).then(() => {
+      mutate();
+      globalMutate(API_PATH.GET_QUIZZES);
+    });
+  };
 
   return {
     data: data,
@@ -28,5 +34,6 @@ export default function useCategory() {
     error,
     createCategory,
     deleteCategory,
+    modifyCategory,
   };
 }

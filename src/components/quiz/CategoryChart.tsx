@@ -2,11 +2,21 @@
 import { useRef, useState } from "react";
 import Button from "../common/Button";
 import useCategory from "@/hooks/useCategory";
+import ModalPortal from "../common/ModalPortal";
+import CategoryModal from "./CategoryModal";
+import { Category } from "@/types/response/GetCategories.dto";
 
 export default function CategoryChart() {
-  const { data: categories, createCategory, deleteCategory } = useCategory();
+  const {
+    data: categories,
+    createCategory,
+    deleteCategory,
+    modifyCategory,
+  } = useCategory();
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const ctgRef = useRef<HTMLInputElement | null>(null);
+  const [modal, setModal] = useState(false);
+  const [category, setCategory] = useState<Category | null>(null);
 
   const inputChangeHandler = () => {
     if (!ctgRef.current?.value) setButtonDisabled(true);
@@ -47,18 +57,32 @@ export default function CategoryChart() {
               </div>
               <Button
                 value="수정"
-                onClick={() => {}}
-                className="flex-none w-16 h-9 text-sm bg-lime-300"
+                onClick={() => {
+                  setModal(true);
+                  setCategory(ctg);
+                }}
+                className="flex-none w-16 h-9 text-sm"
               />
               <Button
                 value="삭제"
                 onClick={() => deleteCategory(ctg.id)}
-                className="flex-none w-16 h-9 text-sm bg-red-400"
+                className="flex-none w-16 h-9 text-sm"
               />
             </div>
           ))}
         </div>
       </div>
+      {modal && category && (
+        <ModalPortal>
+          <CategoryModal
+            setModal={setModal}
+            category={category}
+            onClickModifyBtn={(id: number, title: string) =>
+              modifyCategory(id, title)
+            }
+          />
+        </ModalPortal>
+      )}
     </div>
   );
 }

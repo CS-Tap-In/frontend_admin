@@ -4,8 +4,10 @@ import { axiosStore } from ".";
 const QUIZ_API = {
   createCategory: (title: string) =>
     axiosStore.authInstance.post("/quizzes/categories", { title }),
-  deleteCategory: (idx: number) =>
-    axiosStore.authInstance.delete(`/quizzes/categories/${idx}`),
+  deleteCategory: (id: number) =>
+    axiosStore.authInstance.delete(`/quizzes/categories/${id}`),
+  updateCategory: (id: number, title: string) =>
+    axiosStore.authInstance.put(`/quizzes/categories/${id}`, { title }),
   createQuiz: (quizInfo: CreateQuizDto) =>
     axiosStore.authInstance.post("/quizzes", quizInfo),
   updateQuiz: (quizId: number, quizInfo: PatchQuizDto) =>
