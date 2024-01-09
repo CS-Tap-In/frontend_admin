@@ -2,9 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const token = request.cookies.get("access_token");
-
-  // TODO 수정 필요
+  const token = request.cookies.get("refresh_token");
 
   if (!token) {
     return NextResponse.redirect(new URL("/", request.url));

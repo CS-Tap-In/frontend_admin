@@ -7,6 +7,11 @@ const LOGIN_API = {
       password: password,
     });
   },
+  reissueToken: (refreshToken: string) => {
+    return axios.post(`${process.env.NEXT_PUBLIC_API_DOMAIN}/auth/reissue`, {
+      refreshToken,
+    });
+  },
 };
 
 export { LOGIN_API };

@@ -34,9 +34,8 @@ export default function LoginForm() {
       .then((res) => {
         const token = res.data.accessToken;
         const refreshToken = res.data.refreshToken;
-        //TODO 토큰 저장 위치 변경
+
         setCookie("refresh_token", refreshToken);
-        setCookie("access_token", token);
         axiosStore.setToken(token);
         router.push("/user");
       })
